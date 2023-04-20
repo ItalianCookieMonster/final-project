@@ -1,11 +1,11 @@
 <script>
-import supabase from '../supabase/index'
+// import supabase from '../supabase/index'
 export default {
   name: 'HomeView',
-  async created() {
-    const { data: { user } } = await supabase.auth.getUser()
-    console.log(user)
-  }
+  // async created() {
+  //   const { data: { user } } = await supabase.auth.getUser()
+  //   console.log(user)
+  // }
 }
 </script>
 
