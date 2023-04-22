@@ -5,8 +5,10 @@
 
 <script>
 import { RouterView } from 'vue-router';
-import { mapActions,} from 'pinia';
-import tasks from './stores/tasks';
+// import { mapActions, mapState } from 'pinia';
+import users from './stores/users';
+import { mapActions } from 'pinia';
+
 
 
 export default {
@@ -16,19 +18,53 @@ export default {
     RouterView,
   },
 
+  // computed: {
+  //   ...mapState(users, ['user'])
+  // },
+
   methods: {
-    ...mapActions(tasks, ['_fetchAllTasks'])
+    ...mapActions(users, ['fetchUser'])
   },
 
-  created(){
-    console.log('Created Hello World')
-    this._fetchAllTasks()
-  }
+  async created() {
+    // console.log("I'm this.user in created before try ", this.user)
+    try {
+      await this.fetchUser()
+    } catch (e) {
+      console.error(e)
+    }
+    // console.log("I'm this.user in created in try ", this.user)
+  },
+
+//   watch: {
+//     user: {
+//       handler() {
+//         // console.log("I'm this.user in watch " ,this.user)
+//         if (this.user) {
+//           // ("I'm in if")
+//           this.$router.push({ path: '/' })
+//         } else {
+//           // console.log("I'm in else")
+//           this.$router.push({ path: '/auth/sign-in' })
+//         }
+//       }, 
+//       immediate: true,
+
+//     }
+
+//     // user() {
+//     //   console.log("I'm this.user in watch ", this.user)
+//     //   if (this.user) {
+//     //     ("I'm in if")
+//     //     this.$router.push({ path: '/' })
+//     //   } else {
+//     //     console.log("I'm in else")
+//     //     this.$router.push({ path: '/auth/sign-in' })
+//     //   }
+//     // }
+//   }
+// }
 }
 </script>
 
-<style scoped>
-
-
-
-</style>
+<style scoped></style>

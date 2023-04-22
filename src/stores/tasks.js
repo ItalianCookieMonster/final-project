@@ -19,10 +19,25 @@ export default defineStore ('tasks', {
         return
       }
 
-      console.log(data)
+      console.log("I'm the data fetched on supabase ", data) 
       this.tasks = data
     }
   },
+
+  // async _addNewTask(newTask){
+  //   console.log('Trying to add new task')
+  //   const {data, error} = await supabase
+  //   .from ('tasks') 
+  //   .insert(newTask)
+
+  //   if (error){
+  //     console.error(error)
+  //     return
+  //   }
+
+  //   console.log("I'm the data returning from supabase", data)
+  //   this.tasks.push(data)
+  // }
 
 
 }
