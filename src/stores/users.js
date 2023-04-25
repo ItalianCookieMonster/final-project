@@ -3,19 +3,15 @@ import supabase from '../supabase/index'
 
 export default defineStore('users', {
   state: () => ({
-    // user: undefined,
-    user: null
+    user: undefined,
   }),
 
   actions: {
     async fetchUser() {
-      const {
-        data: { user }
-      } = await supabase.auth.getUser()
-      // console.log("I'm user in fetchUser =", user)
+      const {data: { user }} = await supabase.auth.getUser()
       this.user = user
-      // console.log("I'm this.user in fetchUser", this.user)
-    //   if (!user) throw new Error('User not exists')
+      console.log("I'm this.user in fetchUser", this.user)
+      // if (!user) throw new Error('User not exists')
     },
 
     async signIn({ email, password }) {

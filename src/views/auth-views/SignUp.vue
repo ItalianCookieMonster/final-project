@@ -1,7 +1,7 @@
 <template>
     <p>Sign up view</p>
 
-    <AlertComp v-if="showEmailVerification"/> 
+    <AlertComp v-if="showEmailVerification" :message="alertMessage"/> 
     
     <form>
         <label for="name">Name</label>
@@ -41,7 +41,8 @@ export default {
             surname: 'Your Surname'
             },
 
-            showEmailVerification: false
+            showEmailVerification: false,
+            alertMessage: ''
 
         }
     },
@@ -60,11 +61,14 @@ export default {
             try {
                 await this.signUp(this.userData)
                 this.showEmailVerification = true
+                this.alertMessage = 'Success. Please check your email for verification'
                 // Dovresti pensare a cosa fa l'usuario quando chiude l'alert
                 // this.$router.push({name: 'home'})
                 
             } catch (err) {
                 console.log(err)
+                this.showEmailVerification = true
+                this.alertMessage = 'Something went wrong, please try again later'
             }
         }
     }

@@ -1,38 +1,29 @@
-
 <template>
   <h1>
     Home View
   </h1>
-  <div>
-    <p v-for="task in tasks" :key="task.id">{{ task.title }}</p>
-    <label for="newTask">New Task</label> 
-    <input type="text" name="newTask" v-model="newTask">
-    <!-- <button @click="_addNewTask({ title: this.newTask, user_id: this.user.user.id })">Add Task</button> --> -->
-    <!-- <button @click="signOut">Sign Out </button> -->
-    <button @click="_addNewTask(newTask)">Add new task</button>
-    <button @click="_handleSignOut">Sign Out </button>
-  </div>
+  <TaskComp/>
+  <button @click="_handleSignOut">Sign Out </button>
 </template>
 
 <script>
 import tasks from '../stores/tasks';
 import users from '../stores/users';
 import { mapActions, mapState } from 'pinia';
+import TaskComp from '../components/TaskComp.vue';
 export default {
   name: 'HomeView',
-  data() {
-    return {
-      newTask: ''
-    }
-  },
 
+  components: {
+    TaskComp
+  },
+  
   computed: {
-    ...mapState(tasks, ['tasks']),
     ...mapState(users, ['user'])
   },
 
   methods: {
-    ...mapActions(tasks, ['_fetchAllTasks', '_addNewTask']),
+    ...mapActions(tasks, ['_fetchAllTasks']),
     ...mapActions(users, ['signOut']),
 
     _handleSignOut() {
@@ -44,10 +35,11 @@ export default {
       }
     },
 
-    created() {
-      // console.log('Created Hello World')
-      this._fetchAllTasks()
-    },
-  }
+  },
+
+  created() {
+    this._fetchAllTasks()
+  },
+
 }
 </script>

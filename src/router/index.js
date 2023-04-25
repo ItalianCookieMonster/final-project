@@ -33,37 +33,19 @@ const router = createRouter({
   ]
 })
 
-// router.beforeEach( (to) => {
-//   const { name } = to
-//   console.log(name)
-//   const store = users()
-//   store.fetchUser().then (() => {
-//     const { user } = store
-//     console.log("I'm the user fetch in the router = ", user)
-
-//     if (!user && name !== 'sign-in' && name !== 'sign-up') {
-//       return { name: 'sign-in' }
-//     }
-
-//     if (user && name === 'sign-in' && name === 'sign-up') {
-//       return { name: 'home' }
-//     }
-
-//     return { name }
-//   })
-// })
-
-router.beforeEach((to) => {
+router.beforeEach(async (to) => {
+  const { name } = to
+  console.log(name)
   const store = users()
-  const isAuth = store.user !== null;
-  if (!isAuth && to.name !== 'sign-in' && to.name!=='sign-up') {
-    return { name:'sign-in' }
-  } 
-  if (isAuth && to.name ==='sign-in' && to.name ==='sign-up') {
-    return { name: 'home' }
+  await store.fetchUser()
+
+  const { user } = store
+  console.log("I'm the user fetch in the router = ", user)
+
+  if (!user && to.name !== 'sign-up' && to.name !== 'sign-in') {
+    return { name: 'sign-in' }
   }
-
-  console.log('I am in the router', store)
-
 })
+
+
 export default router
