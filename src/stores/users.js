@@ -35,7 +35,8 @@ export default defineStore('users', {
     async signOut() {
       const { error } = await supabase.auth.signOut()
       if (error) throw error
-      this.user = null
+  
+      
     }
   }
 })

@@ -4,13 +4,14 @@
         <div>
             {{ message }}
         </div>
-        <button @click="_redirectHome">Close</button>
+        <button @click="_redirectUser">Close</button>
     </div>
 </template>
 
 <script>
+
 export default {
-    name: 'AlertComp',
+    name: 'AuthAlertComp',
 
     props: {
         message: {
@@ -29,13 +30,15 @@ export default {
     },
 
     methods: {
-        _redirectHome() {
-            this.$router.push('/')
+        _redirectUser() {
+            if (this.$route.path === '/sign-in') {
+                this.$router.push('/sign-in')
+            } else if (this.$route.path === '/sign-up') {
+                this.$router.push('/sign-up')
+            }
         },
     }
 
 }
 </script>
 
-<style scoped>
-</style>

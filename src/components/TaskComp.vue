@@ -2,16 +2,18 @@
     <ul>
         <li v-for="task in tasks" :key="task.id">
             <span>{{ task.title }}</span>
-            <input v-if="taskIsEditing" type="text" v-model="editedTask"/>
-            <button @click="_handleEditTask(task.id)">{{ editButton }}</button>
+            <!-- <button @click="_handleEditTask(task.id)">{{ editButton }}</button> -->
+            <router-link :to="{ name: 'edit-task', params: { id: task.id } }">>Edit</router-link>
             <button @click="_handleDeleteTask(task.id)">Delete</button>
             <button @click="doneTask()">Done</button>
         </li>
     </ul>   
-    <label for="newTask">New Task</label>
+    <router-link :to="{ name: 'add-task' }">Add Task</router-link>
+    <!-- <label for="newTask">New Task</label>
     <input type="text" name="newTask" v-model="newTask">
-    <button @click="_handleAddNewTask">Add new task</button>
+    <button @click="_handleAddNewTask">Add new task</button> -->
 
+    <router-view></router-view>
     <AlertComp v-if="showAlert" :message="alertMessage" />
 </template>
 
@@ -33,8 +35,8 @@ export default {
             showAlert: false,
             alertMessage: '',
             editedTask: '',
-            taskIsEditing: false,
-            editButton: 'Edit',
+            // taskIsEditing: false,
+            // editButton: 'Edit',
         }
     },
 
@@ -44,18 +46,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(tasks, ['_addNewTask', '_deleteTask', '_editTask']),
-
-        async _handleAddNewTask() {
-            try {
-                await this._addNewTask({ title: this.newTask, user_id: this.user.id });
-            } catch (error) {
-                console.error(error)
-                this.showAlert = true
-                this.alertMessage = 'Something went wrong, please try again'
-            }
-
-        },
+        ...mapActions(tasks, ['_deleteTask', ]),
 
         async _handleDeleteTask(taskId) {
             try {
@@ -66,29 +57,7 @@ export default {
                 this.showAlert = true
                 this.alertMessage = 'Something went wrong, please try again'}
             },
-        
-        _handleEditTask(taskId){
-            if (this.taskIsEditing) { 
-                this.taskIsEditing = false;
-                this.editButton = 'Edit'
-                this._editingTask(taskId, this.editedTask);
-            } else {
-                this.taskIsEditing = true;
-                this.editButton = 'Done'
-            }
-        },
-
-        async _editingTask(taskId, editedTask){
-            try {
-                console.log(taskId)
-                console.log(editedTask)
-                await this._editTask({ title: editedTask, id: taskId }); 
-            } catch (error) {
-                console.error(error)
-                this.showAlert = true
-                this.alertMessage = 'Something went wrong, please try again'
-            }
-        }
+    
     }
 }
 

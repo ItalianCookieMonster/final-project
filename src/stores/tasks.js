@@ -4,7 +4,8 @@ import supabase from '../supabase/index'
 export default defineStore('tasks', {
   state() {
     return {
-      tasks: []
+      tasks: [],
+      singleTask: [],
     }
   },
 
@@ -63,7 +64,33 @@ export default defineStore('tasks', {
       }
 
       console.log(data)
-  }
+      const taskToEdit = {...data[0]}
+      
+      this.tasks.forEach(task => {
+        if (task.id === taskToEdit.id) {
+          task.title = title;
+        }
+      });
+      
 
-}
+    },
+
+    async _fetchSingleTask(id) {
+      const { data, error } = await supabase
+      .from('tasks')
+      .select()
+      .eq('id', id)
+
+      if (error) {
+        throw error
+      }
+      console.log(...data)
+      if (data.length === 0){
+        throw error
+      } else {
+        this.singleTask = data[0]
+      }
+
+    }
+  }
 })

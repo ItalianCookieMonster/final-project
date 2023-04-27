@@ -11,8 +11,22 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      children: [
+        {
+          path: 'edit-task/:id',
+          name: 'edit-task',
+          component: () => import('../views/tasks-views/EditTask.vue'),
+          props: true
+        },
+        {
+          path: 'add-task',
+          name: 'add-task',
+          component: () => import('../views/tasks-views/AddTask.vue'),
+        }
+      ]
     },
+
     {
       path: '/auth',
       name: 'auth',
@@ -46,6 +60,5 @@ router.beforeEach(async (to) => {
     return { name: 'sign-in' }
   }
 })
-
 
 export default router
