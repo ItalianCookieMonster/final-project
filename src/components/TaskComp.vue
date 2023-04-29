@@ -6,16 +6,17 @@
             <button @click="_handleDeleteTask(task.id)">Delete</button>
             <button @click="_handleTaskCompleted(task.id)">Done</button>
         </li>
-    </ul>   
+    </ul>
     <router-link :to="{ name: 'add-task' }">Add Task</router-link>
-    
+
     <ul>
         <li v-for="completedTask in completedTasksList" :key="completedTask.id">
             <span>{{ completedTask.title }}</span>
             <button @click="_handleTaskUndone(completedTask.id)">Uncheck</button>
+            <button @click="_handleDeleteTask(completedTask.id)">Delete</button>
+
         </li>
     </ul>
-
     <router-view></router-view>
     <AlertComp v-if="showAlert" :message="alertMessage" />
 </template>
@@ -45,7 +46,7 @@ export default {
         ...mapState(tasks, ['tasks']),
         ...mapState(users, ['user']),
 
-        taskList(){
+        taskList() {
             return this.tasks.filter(task => task.is_complete === false)
         },
 
@@ -67,13 +68,14 @@ export default {
             } catch (error) {
                 console.error(error)
                 this.showAlert = true
-                this.alertMessage = 'Something went wrong, please try again'}
-            },
-        
+                this.alertMessage = 'Something went wrong, please try again'
+            }
+        },
+
         async _handleTaskCompleted(taskId) {
             try {
                 await this._taskCompleted(taskId);
-            } catch (error){
+            } catch (error) {
                 console.error(error)
                 this.showAlert = true
                 this.alertMessage = 'Something went wrong, please try again'
@@ -82,11 +84,11 @@ export default {
         },
 
         async _handleTaskUndone(taskId) {
-            
+
             try {
                 await this._taskUndone(taskId);
                 this._filterTaskList
-            } catch (error){
+            } catch (error) {
                 console.error(error)
                 this.showAlert = true
                 this.alertMessage = 'Something went wrong, please try again'

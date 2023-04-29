@@ -1,9 +1,10 @@
 <template>
-  <h1>
-    Home View
-  </h1>
-  <TaskComp/>
-  <button @click="_handleSignOut">Sign Out </button>
+    <h1>
+      Hello there!
+    </h1>
+    <p>Think at what you have to do but don't stress if you don't complete all the tasks</p>
+    <TaskComp />
+    <button @click="_handleSignOut">Sign Out </button>
 </template>
 
 <script>
@@ -17,7 +18,7 @@ export default {
   components: {
     TaskComp
   },
-  
+
   computed: {
     ...mapState(users, ['user'])
   },
