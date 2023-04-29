@@ -22,7 +22,7 @@ const router = createRouter({
         {
           path: 'add-task',
           name: 'add-task',
-          component: () => import('../views/tasks-views/AddTask.vue'),
+          component: () => import('../views/tasks-views/AddTask.vue')
         }
       ]
     },
@@ -41,6 +41,16 @@ const router = createRouter({
           path: 'sign-up',
           name: 'sign-up',
           component: SignUp
+        },
+        {
+          path: 'forgot-password',
+          name: 'forgot-password',
+          component: () => import('../../src/views/auth-views/ForgotPassword.vue')
+        },
+        {
+          path: 'reset-password',
+          name: 'reset-password',
+          component: () => import('../../src/views/auth-views/ResetPassword.vue')
         }
       ]
     }
@@ -56,7 +66,13 @@ router.beforeEach(async (to) => {
   const { user } = store
   console.log("I'm the user fetch in the router = ", user)
 
-  if (!user && to.name !== 'sign-up' && to.name !== 'sign-in') {
+  if (
+    !user &&
+    to.name !== 'sign-up' &&
+    to.name !== 'sign-in' &&
+    to.name !== 'reset-password' &&
+    to.name !== 'forgot-password'
+  ) {
     return { name: 'sign-in' }
   }
 })

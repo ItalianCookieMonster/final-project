@@ -30,7 +30,7 @@
                     </div>
                     <div class="signin">
                         <span>Forgot password?
-                            <router-link :to="{ name: 'sign-up' }">Reset password</router-link>
+                            <router-link :to="{ name: 'forgot-password' }">Reset password</router-link>
                         </span>
                     </div>
                 </div>

@@ -6,6 +6,7 @@ export default defineStore('tasks', {
     return {
       tasks: [],
       singleTask: [],
+      tasksDone: []
     }
   },
 
@@ -36,61 +37,72 @@ export default defineStore('tasks', {
     },
 
     async _deleteTask(taskId) {
-      const { data, error } = await supabase
-      .from('tasks')
-      .delete()
-      .eq('id', taskId)
-      .select()
+      const { data, error } = await supabase.from('tasks').delete().eq('id', taskId).select()
 
       if (error) {
         throw error
       }
-      console.log(data)
-      const taskToRemove = {...data[0]}
-      console.log(taskToRemove)
-      this.tasks = this.tasks.filter(task => task.id !== taskToRemove.id)
-
+      const taskToRemove = { ...data[0] }
+      this.tasks = this.tasks.filter((task) => task.id !== taskToRemove.id)
     },
 
-    async _editTask({title, id}) {
-      const { data, error } = await supabase
-      .from('tasks')
-      .update({ title })
-      .eq('id', id)
-      .select()
+    async _editTask({ title, id }) {
+      const { data, error } = await supabase.from('tasks').update({ title }).eq('id', id).select()
 
       if (error) {
         throw error
       }
 
       console.log(data)
-      const taskToEdit = {...data[0]}
-      
-      this.tasks.forEach(task => {
-        if (task.id === taskToEdit.id) {
-          task.title = title;
-        }
-      });
-      
+      const taskToEdit = { ...data[0] }
 
+      this.tasks.forEach((task) => {
+        if (task.id === taskToEdit.id) {
+          task.title = title
+        }
+      })
     },
 
     async _fetchSingleTask(id) {
-      const { data, error } = await supabase
-      .from('tasks')
-      .select()
-      .eq('id', id)
+      const { data, error } = await supabase.from('tasks').select().eq('id', id)
 
       if (error) {
         throw error
       }
       console.log(...data)
-      if (data.length === 0){
+      if (data.length === 0) {
         throw error
       } else {
         this.singleTask = data[0]
       }
+    },
 
-    }
+    async _taskCompleted(id) {
+      console.log("I'm inside taskCompleted in Store " + id)
+      let { data, error } = await supabase
+      .from('tasks')
+      .update({ is_complete: true })
+      .eq('id', id)
+      .select()
+
+      if (error) throw error
+
+      const completedTask = {...data[0]}
+      this.tasks = this.tasks.filter((task) => task.id !== completedTask.id)
+    },
+
+    async _taskUndone(id) {
+      console.log("I'm inside taskUndone in Store " + id)
+      let { data, error } = await supabase
+      .from('tasks')
+      .update({ is_complete: false })
+      .eq('id', id)
+      .select()
+
+      if (error) throw error
+
+      const undoneTask = {...data[0]}
+      this.tasks.push(undoneTask)
+    },
   }
 })

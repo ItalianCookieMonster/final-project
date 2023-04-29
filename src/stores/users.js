@@ -37,6 +37,24 @@ export default defineStore('users', {
       if (error) throw error
   
       
+    },
+
+    async recoverPassword(email) {
+      console.log("I am inside of resetPassword in store")
+      const { error } = await supabase.auth.resetPasswordForEmail(email)
+
+      if (error) throw error
+      
+    },
+
+    async updatePassword(newPassword) {
+      console.log("I am inside of updatePassword in store")
+      const { data, error } = await supabase.auth.updateUser({
+        password: newPassword,
+      })
+
+      if (error) throw error
+      console.log(data)
     }
   }
 })
