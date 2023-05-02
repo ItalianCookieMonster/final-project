@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-md navbar-light">
         <div class="container-xxl">
             <router-link :to="{ name: 'home' }" class="navbar-brand">
-                <span class="fw-bold text-secondary">Chill task manager</span>
+                <span class="fw-bold">Chill task manager</span>
             </router-link>
 
             <!--Toggle button for mobile etc... -->
@@ -20,6 +20,9 @@
                     <li class="nav-item">
                         <router-link :to="{ name: 'home' }" class="nav-link">About</router-link>
                     </li>
+                    <li class="nav-item">
+                        <button @click="_handleSignOut" class="nav-link">Sign Out </button>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -27,9 +30,37 @@
 </template>
 
 <script>
+import users from '../stores/users';
+import { mapActions } from 'pinia';
+
 export default {
-    name: 'NavBar'
-}
+    name: 'NavBar',
+
+    methods: {
+        ...mapActions(users, ['signOut']),
+        _handleSignOut() {
+            try {
+                this.signOut()
+                this.$router.push({ name: 'sign-in' })
+            } catch (err) {
+                console.error(err)
+            }
+
+        }}
+
+
+    }
 
 
 </script>
+
+<style>
+
+button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+
+</style>

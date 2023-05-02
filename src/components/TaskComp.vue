@@ -1,24 +1,70 @@
 <template>
-    <ul>
-        <li v-for="task in taskList" :key="task.id">
-            <span>{{ task.title }}</span>
-            <router-link :to="{ name: 'edit-task', params: { id: task.id } }">>Edit</router-link>
-            <button @click="_handleDeleteTask(task.id)">Delete</button>
-            <button @click="_handleTaskCompleted(task.id)">Done</button>
-        </li>
-    </ul>
-    <router-link :to="{ name: 'add-task' }">Add Task</router-link>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-sm-12 col-lg-6 border-bottom-0">
+                <h3 class="h4 list-header">To do</h3>
+                <ol class="list-group list-group-flush">
 
-    <ul>
-        <li v-for="completedTask in completedTasksList" :key="completedTask.id">
-            <span>{{ completedTask.title }}</span>
-            <button @click="_handleTaskUndone(completedTask.id)">Uncheck</button>
-            <button @click="_handleDeleteTask(completedTask.id)">Delete</button>
+                    <li v-for="task in taskList" :key="task.id" class="list-group-item d-flex 
+                justify-content-between 
+                align-items-start
+                list-group-item-action" >
+                        <div class="ms-2 me-auto" >
+                            <span>
+                                {{ task.title }}
+                            </span>
+                        </div>
+                        <span class="badge delete-icon">
+                            <i class="bi bi-trash" @click="_handleDeleteTask(task.id)"> </i>
+                        </span>
+                        <span class="badge">
+                            <router-link :to="{ name: 'edit-task', params: { id: task.id } }" class="edit-icon">
+                                <i class="bi bi-pencil" ></i>
+                            </router-link>
+                        </span>
 
-        </li>
-    </ul>
-    <router-view></router-view>
+                        <span class="badge done-icon">
+                            <i class="bi bi-check-lg" @click="_handleTaskCompleted(task.id)"></i>
+                        </span>
+                    </li>
+                </ol>
+
+            </div>
+
+
+            <div class="col-sm-12 col-lg-6 border">
+                <h3 class="h4 list-header">Done</h3>
+                <ol class="list-group list-group-flush">
+                    <li v-for="completedTask in completedTasksList" :key="completedTask.id" class="list-group-item d-flex 
+                justify-content-between 
+                align-items-start
+                list-group-item-action">
+                        <div class="ms-2 me-auto">
+                            <span>
+                                {{ completedTask.title }}
+                            </span>
+                        </div>
+                        <span class="badge unchecked-icon">
+                            <i class="bi bi-arrow-90deg-up"
+                                @click="_handleTaskUndone(completedTask.id)"></i>
+                        </span>
+                        <span class="badge delete-icon">
+                            <i class="bi bi-trash" @click="_handleDeleteTask(completedTask.id)"> </i>
+                        </span>
+                    </li>
+                </ol>
+            </div>
+            <router-view></router-view>
+        </div>
+        
+    </div>
+
     <AlertComp v-if="showAlert" :message="alertMessage" />
+
+    <div class="add-task-btn">
+    <router-link :to="{ name: 'add-task' }" class="btn">Add Task</router-link>
+    </div>
+    
 </template>
 
 <script>
@@ -38,7 +84,6 @@ export default {
             newTask: '',
             showAlert: false,
             alertMessage: '',
-            // editedTask: '',
         }
     },
 
@@ -53,10 +98,6 @@ export default {
         completedTasksList() {
             return this.tasks.filter(task => task.is_complete === true);
         }
-    },
-
-    watch: {
-
     },
 
     methods: {
@@ -94,7 +135,97 @@ export default {
                 this.alertMessage = 'Something went wrong, please try again'
             }
         }
-    }
+    },
+
 }
 
 </script>
+
+<style scoped>
+
+.row {
+    width: 100%;
+    --bs-gutter-x: 0;
+}
+.container{
+    margin-bottom: 20px;
+
+}
+
+.list-header {
+    padding: 20px 10px 20px 10px;
+}
+
+.delete-icon:focus,
+.delete-icon:hover{
+    color: red
+}
+.delete-icon,
+.edit-icon,
+.done-icon,
+.unchecked-icon {
+    color: black;
+}
+
+.edit-icon:hover,
+.edit-icon:focus {
+    color: rgb(255, 221, 0); 
+}
+
+
+.done-icon:hover,
+.done-icon:focus {
+    color: rgba(0, 255, 8, 0.772); 
+}
+
+.unchecked-icon:hover,
+.unchecked-icon:focus {
+    color: rgba(0, 162, 255, 0.772); 
+}
+
+.add-task-btn .btn {
+    color: white;
+}
+
+.add-task-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 10px;
+    margin: 20px 10px;
+}
+
+.add-task-btn {
+    background: linear-gradient( 90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+    background-size: 200%;
+}
+
+.add-task-btn::before {
+    content: '';
+    position: absolute;
+    background: inherit;
+    border-radius: 10px;
+    right: -5px;
+    left: -5px;
+    bottom: -5px;
+    top: -5px;
+    filter: blur(20px);
+    opacity: 0
+}
+
+.add-task-btn:hover::before{
+    opacity: 1;
+}
+
+@media (min-width: 992) {
+    .badge {
+        width: 30px;
+    }
+
+}
+
+
+
+</style>

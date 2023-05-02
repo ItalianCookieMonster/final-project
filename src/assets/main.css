@@ -1,15 +1,28 @@
 @import './base.css';
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css");
 
 #app {
-  max-width: 1280px;
+  background-image: url('../assets/images/bg3.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  max-width: 100%;
   margin: 0 auto;
   padding: 2rem;
 
   font-weight: normal;
 }
 
+li {
+  list-style: none;
+}
+
+ul {
+  padding-left: 0
+}
+
 .wrapper {
-  background-color: #ececec;
+  /* background-color: #ececec; */
   padding: 0 20px 0 20px;
 }
 
