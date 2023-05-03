@@ -5,7 +5,7 @@
                 <h3 class="h4 list-header">To do</h3>
                 <ol class="list-group list-group-flush">
 
-                    <li v-for="task in taskList" :key="task.id" class="list-group-item d-flex 
+                    <li v-for="task in tasks" :key="task.id" class="list-group-item d-flex 
                 justify-content-between 
                 align-items-start
                 list-group-item-action" >
@@ -35,7 +35,7 @@
             <div class="col-sm-12 col-lg-6 border">
                 <h3 class="h4 list-header">Done</h3>
                 <ol class="list-group list-group-flush">
-                    <li v-for="completedTask in completedTasksList" :key="completedTask.id" class="list-group-item d-flex 
+                    <li v-for="completedTask in completedTaskList" :key="completedTask.id" class="list-group-item d-flex 
                 justify-content-between 
                 align-items-start
                 list-group-item-action">
@@ -61,9 +61,7 @@
 
     <AlertComp v-if="showAlert" :message="alertMessage" />
 
-    <div class="add-task-btn">
     <router-link :to="{ name: 'add-task' }" class="btn">Add Task</router-link>
-    </div>
     
 </template>
 
@@ -76,7 +74,7 @@ export default {
     name: 'TaskComp',
 
     components: {
-        AlertComp
+        AlertComp,
     },
 
     data() {
@@ -88,16 +86,8 @@ export default {
     },
 
     computed: {
-        ...mapState(tasks, ['tasks']),
+        ...mapState(tasks, ['tasks', 'completedTaskList']),
         ...mapState(users, ['user']),
-
-        taskList() {
-            return this.tasks.filter(task => task.is_complete === false)
-        },
-
-        completedTasksList() {
-            return this.tasks.filter(task => task.is_complete === true);
-        }
     },
 
     methods: {
@@ -125,10 +115,8 @@ export default {
         },
 
         async _handleTaskUndone(taskId) {
-
             try {
                 await this._taskUndone(taskId);
-                this._filterTaskList
             } catch (error) {
                 console.error(error)
                 this.showAlert = true
@@ -142,11 +130,6 @@ export default {
 </script>
 
 <style scoped>
-
-.row {
-    width: 100%;
-    --bs-gutter-x: 0;
-}
 .container{
     margin-bottom: 20px;
 
@@ -181,42 +164,6 @@ export default {
 .unchecked-icon:hover,
 .unchecked-icon:focus {
     color: rgba(0, 162, 255, 0.772); 
-}
-
-.add-task-btn .btn {
-    color: white;
-}
-
-.add-task-btn {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border-radius: 10px;
-    margin: 20px 10px;
-}
-
-.add-task-btn {
-    background: linear-gradient( 90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
-    background-size: 200%;
-}
-
-.add-task-btn::before {
-    content: '';
-    position: absolute;
-    background: inherit;
-    border-radius: 10px;
-    right: -5px;
-    left: -5px;
-    bottom: -5px;
-    top: -5px;
-    filter: blur(20px);
-    opacity: 0
-}
-
-.add-task-btn:hover::before{
-    opacity: 1;
 }
 
 @media (min-width: 992) {

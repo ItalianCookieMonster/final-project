@@ -1,5 +1,4 @@
 <template>
-  <!-- <button @click="_handleSignOut" class="">Sign Out </button> -->
   <div class="container wrapper rounded">
     <h1 class="h2 title">
       Hello there!
