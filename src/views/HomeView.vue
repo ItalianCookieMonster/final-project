@@ -1,9 +1,14 @@
 <template>
-  <h1>
-    Home View
-  </h1>
-  <TaskComp/>
-  <button @click="_handleSignOut">Sign Out </button>
+  <div class="container wrapper rounded">
+    <h1 class="h2 title">
+      Hello there!
+    </h1>
+    <p class="text-secondary">
+      <small>Let's plan what we have to get done!</small>
+    </p>
+    <TaskComp />
+  </div>
+
 </template>
 
 <script>
@@ -17,23 +22,13 @@ export default {
   components: {
     TaskComp
   },
-  
+
   computed: {
     ...mapState(users, ['user'])
   },
 
   methods: {
     ...mapActions(tasks, ['_fetchAllTasks']),
-    ...mapActions(users, ['signOut']),
-
-    _handleSignOut() {
-      try {
-        this.signOut()
-        this.$router.push({ name: 'sign-in' })
-      } catch (err) {
-        console.error(err)
-      }
-    },
 
   },
 
@@ -43,3 +38,15 @@ export default {
 
 }
 </script>
+
+<style scoped>
+.container {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+title-text {
+  font-size: 16px;
+  font-weight: 200;
+}
+</style>

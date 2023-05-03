@@ -6,14 +6,14 @@ export default defineStore('tasks', {
     return {
       tasks: [],
       singleTask: [],
-      tasksDone: []
+      completedTaskList: []
     }
   },
 
   actions: {
     async _fetchAllTasks() {
       const { data, error } = await supabase
-        .from('tasks') // Da dove prendo il mio progetto supabase
+        .from('tasks')
         .select()
 
       if (error) {
@@ -21,7 +21,6 @@ export default defineStore('tasks', {
         return
       }
 
-      // console.log("I'm the data fetched on supabase ", data)
       this.tasks = data
     },
 
@@ -89,6 +88,7 @@ export default defineStore('tasks', {
 
       const completedTask = {...data[0]}
       this.tasks = this.tasks.filter((task) => task.id !== completedTask.id)
+      this.completedTaskList.push(completedTask)
     },
 
     async _taskUndone(id) {
@@ -102,6 +102,7 @@ export default defineStore('tasks', {
       if (error) throw error
 
       const undoneTask = {...data[0]}
+      this.completedTaskList = this.completedTaskList.filter((task) => task.id !== undoneTask.id)
       this.tasks.push(undoneTask)
     },
   }

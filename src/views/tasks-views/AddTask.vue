@@ -1,13 +1,31 @@
 <template>
-    <form>
-        <label for="newTask">Title</label>
-        <input type="text" v-model="newTask" name="newTask">
-        <input type="text-area" v-model="description" name="editedDescription">
-        <button @click.prevent="_handleAddNewTask">Add new task</button>
-        <router-link :to="{name: 'home'}">Cancel</router-link>
-    </form>
+    <div class="overlay">
+        <div class="container container-with-overlay">
+            <div class="row justify-content-center">
+                <div class="col">
+                    <form>
+                        <div class="form-group">
+                        <label class="lable" for="newTask">Title</label>
+                        <input type="text" v-model="newTask" name="newTask" class="form-control">
+                        </div>
 
-    <AlertComp v-if="showAlert" :message="alertMessage" />
+                        <div class="form-group">
+                        <label for="newTaskDescription" class="lable">Description</label>
+                        <textarea type="text-area" v-model="description" name="newTaskDescription" rows="4" class="form-control"></textarea>
+                        </div>
+
+                        <div class="btns-form">
+                        <button @click.prevent="_handleAddNewTask" class="btn">Save</button>
+                        <router-link :to="{ name: 'home' }" class="btn">Cancel</router-link>
+                        </div>
+                    </form>
+
+                    <AlertComp v-if="showAlert" :message="alertMessage" />
+                </div>
+
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -59,3 +77,18 @@ export default {
 
 }
 </script>
+
+<style scoped>
+.row {
+    padding: 10px;
+    height: auto;
+}
+
+.col {
+    height: auto;
+}
+
+.lable {
+    padding: 10px;
+}
+</style>
