@@ -55,6 +55,22 @@ export default defineStore('users', {
 
       if (error) throw error
       console.log(data)
-    }
+    },
+
+    async signInWithGoogle() {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+      })
+
+      if (error) throw error
+    },
+
+    // async signInWithGitHub() {
+    //   const { error } = await supabase.auth.signInWithOAuth({
+    //     provider: 'github',
+    //   })
+
+    //   if (error) throw error
+    // }
   }
 })

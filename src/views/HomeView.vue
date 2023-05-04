@@ -1,5 +1,5 @@
 <template>
-  <div class="container wrapper rounded">
+  <div class="wrapper rounded">
     <h1 class="h2 title">
       Hello there!
     </h1>
@@ -40,10 +40,6 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  padding-top: 15px;
-  padding-bottom: 15px;
-}
 
 title-text {
   font-size: 16px;

@@ -3,7 +3,7 @@
     height: 550px;
 }
 
-.container {
+.auth-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,7 +18,7 @@
 }
 
 .side-image {
-    background-image: url(../assets/images/signin4.jpg);
+    background-image: url(../assets/images/signIn3.jpg);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -104,7 +104,7 @@
 .signin {
     text-align: center;
     font-size: small;
-    margin-top: 25px;
+    margin-top: 80px;
 }
 
 .signin span a {
@@ -125,14 +125,16 @@
     }
 
     .side-image img {
-        width: 35px;
+        /* width: 35px;
         position: absolute;
         top: 20px;
-        left: 47%;
+        left: 47%; */
+        display: none;
     }
 
     .auth-row {
         max-width: 420px;
         width: 100%;
+        height: 700px;
     }
 }

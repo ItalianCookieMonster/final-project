@@ -58,7 +58,7 @@
         </div>
         
     </div>
-
+    <AllDone v-if="showRelax"></AllDone>
     <AlertComp v-if="showAlert" :message="alertMessage" />
 
     <router-link :to="{ name: 'add-task' }" class="btn">Add Task</router-link>
@@ -70,11 +70,13 @@ import tasks from '../stores/tasks';
 import users from '../stores/users';
 import { mapActions, mapState } from 'pinia';
 import AlertComp from './AlertComp.vue';
+import AllDone from './AllDone.vue';
 export default {
     name: 'TaskComp',
 
     components: {
         AlertComp,
+        AllDone
     },
 
     data() {
@@ -82,12 +84,22 @@ export default {
             newTask: '',
             showAlert: false,
             alertMessage: '',
+            showRelax: false,
+    
         }
+
     },
 
     computed: {
         ...mapState(tasks, ['tasks', 'completedTaskList']),
         ...mapState(users, ['user']),
+    },
+
+    watch(){
+        if (this.tasks.length === 0) {
+            console.log(this.tasks);
+            this.showRelax = true;
+        }
     },
 
     methods: {
@@ -130,8 +142,14 @@ export default {
 </script>
 
 <style scoped>
+
+.row {
+    height: 100%;
+    width: 100%; 
+} 
 .container{
     margin-bottom: 20px;
+
 
 }
 

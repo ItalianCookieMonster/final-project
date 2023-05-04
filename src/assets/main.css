@@ -1,17 +1,30 @@
 @import './base.css';
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css");
 
-#app {
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body{
   background-image: url('../assets/images/bg3.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+#app {
   max-width: 100%;
   margin: 0 auto;
   padding: 2rem;
 
   font-weight: normal;
-  /* height: 100vh; */
+  height: auto;
 }
 
 li {
@@ -24,7 +37,7 @@ ul {
 
 .wrapper {
   background-color: #ececec; 
-  padding: 0 20px 0 20px;
+  padding: 20px;
 }
 
 
@@ -97,3 +110,8 @@ ul {
     box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.2);
 }
 
+@media only screen and (max-width: 768px) {
+  .wrapper {
+    padding: 20px;
+  }
+}

@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-md navbar-light">
         <div class="container-xxl">
             <router-link :to="{ name: 'home' }" class="navbar-brand">
-                <span class="fw-bold">Chill task manager</span>
+                <span class="fw-bold">Chilled task manager</span>
             </router-link>
 
             <!--Toggle button for mobile etc... -->

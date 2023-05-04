@@ -56,10 +56,13 @@ export default {
 
     methods: {
         _redirectUser() {
+            if (this.message.includes('success')) {
+                this.$router.push({ name: 'sign-in' })
+            }
             if (this.$route.path === '/sign-in') {
-                this.$router.push('/sign-in')
+                this.$router.push({ name: 'sign-in' })
             } else if (this.$route.path === '/sign-up') {
-                this.$router.push('/sign-up')
+                this.$router.push({ name: 'sign-up' })
             }
         },
     }
