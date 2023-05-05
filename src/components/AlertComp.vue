@@ -37,7 +37,7 @@ export default {
     },
     computed: {
         title() {
-            if (this.message.includes('success')) {
+            if (this.message.includes('success' || 'sent')) {
                 return 'Well done!';
             } else {
                 return 'Oh no!';

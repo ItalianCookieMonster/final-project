@@ -8,8 +8,8 @@
                     <li v-for="task in tasks" :key="task.id" class="list-group-item d-flex 
                 justify-content-between 
                 align-items-start
-                list-group-item-action" >
-                        <div class="ms-2 me-auto" >
+                list-group-item-action">
+                        <div class="ms-2 me-auto">
                             <span>
                                 {{ task.title }}
                             </span>
@@ -19,7 +19,7 @@
                         </span>
                         <span class="badge">
                             <router-link :to="{ name: 'edit-task', params: { id: task.id } }" class="edit-icon">
-                                <i class="bi bi-pencil" ></i>
+                                <i class="bi bi-pencil"></i>
                             </router-link>
                         </span>
 
@@ -45,8 +45,7 @@
                             </span>
                         </div>
                         <span class="badge unchecked-icon">
-                            <i class="bi bi-arrow-90deg-up"
-                                @click="_handleTaskUndone(completedTask.id)"></i>
+                            <i class="bi bi-arrow-90deg-up" @click="_handleTaskUndone(completedTask.id)"></i>
                         </span>
                         <span class="badge delete-icon">
                             <i class="bi bi-trash" @click="_handleDeleteTask(completedTask.id)"> </i>
@@ -54,15 +53,13 @@
                     </li>
                 </ol>
             </div>
-            <router-view></router-view>
         </div>
-        
     </div>
-    <AllDone v-if="showRelax"></AllDone>
-    <AlertComp v-if="showAlert" :message="alertMessage" />
 
-    <router-link :to="{ name: 'add-task' }" class="btn">Add Task</router-link>
-    
+    <AllDone :showRelax="showRelax"></AllDone>
+
+    <router-view></router-view>
+    <AlertComp v-if="showAlert" :message="alertMessage" />
 </template>
 
 <script>
@@ -71,6 +68,7 @@ import users from '../stores/users';
 import { mapActions, mapState } from 'pinia';
 import AlertComp from './AlertComp.vue';
 import AllDone from './AllDone.vue';
+
 export default {
     name: 'TaskComp',
 
@@ -84,8 +82,7 @@ export default {
             newTask: '',
             showAlert: false,
             alertMessage: '',
-            showRelax: false,
-    
+
         }
 
     },
@@ -93,13 +90,15 @@ export default {
     computed: {
         ...mapState(tasks, ['tasks', 'completedTaskList']),
         ...mapState(users, ['user']),
-    },
 
-    watch(){
-        if (this.tasks.length === 0) {
-            console.log(this.tasks);
-            this.showRelax = true;
+        showRelax() {
+            if (this.tasks.length === 0) {
+                return true
+            } else {
+                return false
+            }
         }
+
     },
 
     methods: {
@@ -135,6 +134,7 @@ export default {
                 this.alertMessage = 'Something went wrong, please try again'
             }
         }
+
     },
 
 }
@@ -142,12 +142,16 @@ export default {
 </script>
 
 <style scoped>
+[v-cloak] {
+    display: none;
+}
 
 .row {
     height: 100%;
-    width: 100%; 
-} 
-.container{
+    width: 100%;
+}
+
+.container {
     margin-bottom: 20px;
 
 
@@ -158,9 +162,10 @@ export default {
 }
 
 .delete-icon:focus,
-.delete-icon:hover{
+.delete-icon:hover {
     color: red
 }
+
 .delete-icon,
 .edit-icon,
 .done-icon,
@@ -170,18 +175,18 @@ export default {
 
 .edit-icon:hover,
 .edit-icon:focus {
-    color: rgb(255, 221, 0); 
+    color: rgb(255, 221, 0);
 }
 
 
 .done-icon:hover,
 .done-icon:focus {
-    color: rgba(0, 255, 8, 0.772); 
+    color: rgba(0, 255, 8, 0.772);
 }
 
 .unchecked-icon:hover,
 .unchecked-icon:focus {
-    color: rgba(0, 162, 255, 0.772); 
+    color: rgba(0, 162, 255, 0.772);
 }
 
 @media (min-width: 992) {
@@ -190,7 +195,4 @@ export default {
     }
 
 }
-
-
-
 </style>

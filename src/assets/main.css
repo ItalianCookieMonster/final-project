@@ -72,8 +72,6 @@ ul {
   opacity: 1;
 }
 
-/*Forms for tasks */
-
 .overlay {
   position: fixed;
   top: 0;
@@ -89,7 +87,6 @@ ul {
     width: 70%;
     top: 30%;
 }
-
 
 
 .btns-form {

@@ -7,6 +7,7 @@
       <small>Let's plan what we have to get done!</small>
     </p>
     <TaskComp />
+    <router-link :to="{ name: 'add-task' }" class="btn">Add Task</router-link>
   </div>
 
 </template>
@@ -40,6 +41,10 @@ export default {
 </script>
 
 <style scoped>
+
+.wrapper {
+  min-height: 80vh;
+}
 
 title-text {
   font-size: 16px;
