@@ -20,6 +20,7 @@ export default defineStore('tasks', {
         console.error(error)
         return
       }
+      console.log(data)
       const allTasks = data
       this.tasks = allTasks.filter(task => !task.is_complete)
       this.completedTaskList = allTasks.filter(task => task.is_complete)

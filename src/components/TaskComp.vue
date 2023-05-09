@@ -9,7 +9,7 @@
                 align-items-start
                 list-group-item-action">
                     <div class="ms-2 me-auto">
-                        <span class="text">
+                        <span class="task-text">
                             {{ task.title }}
                         </span>
                     </div>
@@ -38,7 +38,7 @@
                 align-items-start
                 list-group-item-action">
                     <div class="ms-2 me-auto">
-                        <span class="text">
+                        <span class="task-text">
                             <del>
                                 {{ completedTask.title }}
                             </del>
@@ -145,7 +145,6 @@ export default {
 </script>
 
 <style scoped>
-
 .row {
     height: 100%;
     width: 100%;
@@ -185,7 +184,7 @@ export default {
 
 
 @media (min-width: 992px) {
-    .text {
+    .task-text {
         font-size: 1.2rem
     }
 

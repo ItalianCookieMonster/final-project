@@ -2,7 +2,7 @@
 <template>
   <NavBar />
   <RouterView />
- 
+
 </template>
 
 <script>
