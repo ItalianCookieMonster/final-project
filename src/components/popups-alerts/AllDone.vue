@@ -1,19 +1,29 @@
 <template>
-    <div class="overlay" v-if="showRelax">
+    <div class="overlay" v-if="showRelaxCopy">
         <div class="container rounded">
             <h3>Well done!</h3>
             <p class="relax-text">You've completed all your tasks. Now it's time for some rest</p>
-            <img class="relax-image rounded" src="../assets/images/relax3.jpg" alt="relax image">
-            <router-link :to="{ name: 'add-task' }" class="btn">Start over </router-link>
+            <img class="relax-image rounded" src="../../assets/images/spaceRelax.jpg" alt="relax image">
+            <div class="btn-container">
+                <router-link :to="{ name: 'add-task' }" class="btn">Start over </router-link>
+                <button class="btn" @click="_hideShowRelax">Go back</button>
+            </div>
+
         </div>
     </div>
 </template>
 
 <script>
-import tasks from '../stores/tasks';
+import tasks from '../../stores/tasks';
 import { mapState } from 'pinia';
 export default {
     name: 'AllDone',
+
+    data() {
+        return {
+            showRelaxCopy: false,
+        }
+    },
 
     props: {
         showRelax: {
@@ -25,15 +35,34 @@ export default {
     computed: {
 
         ...mapState(tasks, ['tasks', 'completedTasks']),
+    },
+
+    watch: {
+        showRelax(newValue) {
+            this.showRelaxCopy = newValue;
+        }
+    },
+
+    methods: {
+        _hideShowRelax() {
+            this.showRelaxCopy = false;
+        }
     }
 
-    
+
+
 }
 
 
 </script>
 
 <style scoped>
+
+.btn-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
 .relax-image {
     width: 80%;
 }

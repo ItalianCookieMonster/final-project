@@ -1,34 +1,36 @@
 <template>
-   <div class="overlay">
+    <div class="overlay" v-if="alertDisplay">
         <div class="container container-with-overlay">
             <div class="alert" :class="alertClass" role="alert">
-                    <i v-if="message.includes('success')" class="bi bi-emoji-smile">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="color:#0f5132 "
+                <i v-if="message.includes('success')" class="bi bi-emoji-smile">
+                    <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close" style="color:#0f5132 "
                         @click="_redirectUser">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </i>
-                    <i v-else class="bi bi-emoji-frown">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="color:#842029; "
-                        @click="_redirectUser">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </i>
+                    </button>
+                </i>
 
+                <i v-else class="bi bi-emoji-frown">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @click="toggleAlert" style="color:#842029;"></button>
+                </i>
                 <h4>{{ title }}</h4>
                 <p>
                     {{ message }}
                 </p>
-
             </div>
         </div>
-    </div>⁄
+    </div>
 </template>
 
 <script>
 
 export default {
     name: 'AuthAlertComp',
+
+    data(){
+        return {
+            alertDisplay: true,
+                    
+        }
+    },
 
     props: {
         message: {
@@ -56,21 +58,20 @@ export default {
 
     methods: {
         _redirectUser() {
-            if (this.message.includes('success')) {
-                this.$router.push({ name: 'sign-in' })
-            }
-            if (this.$route.path === '/sign-in') {
-                this.$router.push({ name: 'sign-in' })
-            } else if (this.$route.path === '/sign-up') {
-                this.$router.push({ name: 'sign-up' })
-            }
+            this.$router.push({name: 'sign-in'});
         },
+
+        toggleAlert() {
+                    this.alertDisplay = false
+                },
     }
 
 }
 </script>
 
 <style scoped>
+
+
 .container-with-overlay {
     display: flex;
     justify-content: center;
@@ -82,9 +83,10 @@ export default {
     border-radius: 20px;
 }
 
-.close {
+.btn-close {
     float: right;
-    width: 1.5rem;
+    width: 5px;
+    height: 5px;
 }
 
 .close span {
@@ -94,6 +96,5 @@ export default {
 .alert i {
     font-size: 2rem;
 }
-
 </style>
 

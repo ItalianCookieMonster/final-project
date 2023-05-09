@@ -5,18 +5,19 @@
                 <div class="col">
                     <form>
                         <div class="form-group">
-                        <label class="lable" for="newTask">Title</label>
-                        <input type="text" v-model="newTask" name="newTask" class="form-control">
+                            <label class="lable" for="newTask">Title</label>
+                            <input type="text" v-model="newTask" name="newTask" class="form-control">
                         </div>
 
                         <div class="form-group">
-                        <label for="newTaskDescription" class="lable">Description</label>
-                        <textarea type="text-area" v-model="description" name="newTaskDescription" rows="4" class="form-control"></textarea>
+                            <label for="newTaskDescription" class="lable">Description</label>
+                            <textarea type="text-area" v-model="description" name="newTaskDescription" rows="4"
+                                class="form-control"></textarea>
                         </div>
 
                         <div class="btns-form">
-                        <button @click.prevent="_handleAddNewTask" class="btn">Save</button>
-                        <router-link :to="{ name: 'home' }" class="btn">Cancel</router-link>
+                            <button @click.prevent="_handleAddNewTask" class="btn">Save</button>
+                            <router-link :to="{ name: 'home' }" class="btn">Cancel</router-link>
                         </div>
                     </form>
 
@@ -29,7 +30,7 @@
 </template>
 
 <script>
-import AlertComp from '../../components/AlertComp.vue';
+import AlertComp from '../../components/popups-alerts/AlertComp.vue';
 import tasks from '../../stores/tasks';
 import users from '../../stores/users';
 import { mapActions, mapState } from 'pinia';
@@ -59,8 +60,8 @@ export default {
         ...mapActions(tasks, ['_addNewTask']),
 
         async _handleAddNewTask() {
+            await this._checkIfTitle()
             try {
-                console.log(this.user.id)
                 await this._addNewTask({ title: this.newTask, user_id: this.user.id });
                 this.showAlert = true;
                 this.alertMessage = 'Task added successfully';
@@ -68,9 +69,20 @@ export default {
                 console.error(error)
                 this.showAlert = true
                 this.alertMessage = 'Something went wrong, please try again'
+
             }
 
         },
+
+        async _checkIfTitle() {
+            if (this.newTask.length === 0) {
+                this.showAlert = true
+                this.alertMessage = 'You forgot to insert a title'
+                throw new Error
+            }
+
+            return
+        }
     }
 
 
@@ -91,4 +103,6 @@ export default {
 .lable {
     padding: 10px;
 }
+
+
 </style>

@@ -31,7 +31,7 @@
 <script>
 import tasks from '../../stores/tasks';
 import { mapActions, mapState } from 'pinia';
-import AlertComp from '../../components/AlertComp.vue';
+import AlertComp from '../../components/popups-alerts/AlertComp.vue';
 
 export default {
     name: 'EditTask',
@@ -77,7 +77,7 @@ export default {
             try {
                 await this._editTask({ title: this.editedTask, id: this.id });
                 this.showAlert = true;
-                this.alertMessage = 'Task added successfully';
+                this.alertMessage = 'Task updated successfully';
             } catch (error) {
                 console.error(error)
                 this.showAlert = true

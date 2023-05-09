@@ -1,10 +1,8 @@
 <template>
-    <div class="wrapper">
         <div class="container auth-container">
             <div class="row auth-row">
-                <div class="col-md-6 side-image">
-                    <img src="../../assets/images/white.png" alt="white png" class="imageSignIn" />
-                </div>
+                <!--This div contains a background image-->
+                <div class="col-md-6 side-image"></div>
                 <div class="col-md-6 right">
                     <div class="input-box">
                         <header>Welcome to the chilled task manager</header>
@@ -40,7 +38,6 @@
                 </div>
             </div>
         </div>
-    </div>
 
     <AuthAlertComp v-if="showAlert" :message="alertMessage" />
 </template>
@@ -48,7 +45,7 @@
 <script>
 import { mapState, mapActions } from 'pinia';
 import users from '../../stores/users';
-import AuthAlertComp from '../../components/AuthAlertComp.vue';
+import AuthAlertComp from '../../components/popups-alerts/AuthAlertComp.vue';
 // eslint-disable-next-line
 import authStyle from '../../assets/auth.css';
 
@@ -86,10 +83,9 @@ export default {
             } catch (err) {
                 console.log(err)
                 this.showAlert = true
-                if (err.response && err.response.status === 401) {
-                    this.alertMessage = 'Your credentials are incorrect, please try again'
-                } else if (err.response && err.response.status === 500) {
-                    this.alertMessage = 'The server is down, please try again later'
+                
+                if (err.message.includes('Invalid')){
+                    this.alertMessage = 'Your credentials are incorrect'
                 } else {
                     this.alertMessage = 'Something went wrong, please try again'
                 }
@@ -117,6 +113,8 @@ export default {
         //             this.alertMessage = 'Something went wrong, please try again'
         //         }
         // }
+
+    
 
     }
 }
