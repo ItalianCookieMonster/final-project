@@ -20,7 +20,6 @@ export default defineStore('tasks', {
         console.error(error)
         return
       }
-      console.log(data)
       const allTasks = data
       this.tasks = allTasks.filter(task => !task.is_complete)
       this.completedTaskList = allTasks.filter(task => task.is_complete)
@@ -54,8 +53,6 @@ export default defineStore('tasks', {
       if (error) {
         throw error
       }
-
-      console.log(data)
       const taskToEdit = { ...data[0] }
 
       this.tasks.forEach((task) => {
