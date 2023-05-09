@@ -20,8 +20,9 @@ export default defineStore('tasks', {
         console.error(error)
         return
       }
-
-      this.tasks = data
+      const allTasks = data
+      this.tasks = allTasks.filter(task => !task.is_complete)
+      this.completedTaskList = allTasks.filter(task => task.is_complete)
     },
 
     async _addNewTask({ title, user_id }) {
@@ -43,6 +44,7 @@ export default defineStore('tasks', {
       }
       const taskToRemove = { ...data[0] }
       this.tasks = this.tasks.filter((task) => task.id !== taskToRemove.id)
+      this.completedTaskList = this.completedTaskList.filter((task) => task.id!== taskToRemove.id)
     },
 
     async _editTask({ title, id }) {

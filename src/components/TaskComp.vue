@@ -1,80 +1,79 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-sm-12 col-lg-6 border-bottom-0">
-                <h3 class="h4 list-header">To do</h3>
-                <ol class="list-group list-group-flush">
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-lg-6 border-bottom-0">
+            <h3 class="h4 list-header">To do</h3>
+            <ol class="list-group list-group-flush">
 
-                    <li v-for="task in tasks" :key="task.id" class="list-group-item d-flex 
-                justify-content-between 
-                align-items-start
-                list-group-item-action" >
-                        <div class="ms-2 me-auto" >
-                            <span>
-                                {{ task.title }}
-                            </span>
-                        </div>
-                        <span class="badge delete-icon">
-                            <i class="bi bi-trash" @click="_handleDeleteTask(task.id)"> </i>
-                        </span>
-                        <span class="badge">
-                            <router-link :to="{ name: 'edit-task', params: { id: task.id } }" class="edit-icon">
-                                <i class="bi bi-pencil" ></i>
-                            </router-link>
-                        </span>
-
-                        <span class="badge done-icon">
-                            <i class="bi bi-check-lg" @click="_handleTaskCompleted(task.id)"></i>
-                        </span>
-                    </li>
-                </ol>
-
-            </div>
-
-
-            <div class="col-sm-12 col-lg-6 border">
-                <h3 class="h4 list-header">Done</h3>
-                <ol class="list-group list-group-flush">
-                    <li v-for="completedTask in completedTaskList" :key="completedTask.id" class="list-group-item d-flex 
+                <li v-for="task in tasks" :key="task.id" class="list-group-item d-flex 
                 justify-content-between 
                 align-items-start
                 list-group-item-action">
-                        <div class="ms-2 me-auto">
-                            <span>
-                                {{ completedTask.title }}
-                            </span>
-                        </div>
-                        <span class="badge unchecked-icon">
-                            <i class="bi bi-arrow-90deg-up"
-                                @click="_handleTaskUndone(completedTask.id)"></i>
+                    <div class="ms-2 me-auto">
+                        <span class="text">
+                            {{ task.title }}
                         </span>
-                        <span class="badge delete-icon">
-                            <i class="bi bi-trash" @click="_handleDeleteTask(completedTask.id)"> </i>
-                        </span>
-                    </li>
-                </ol>
-            </div>
-            <router-view></router-view>
+                    </div>
+                    <span class="badge">
+                        <router-link :to="{ name: 'edit-task', params: { id: task.id } }" class="edit-icon">
+                            <i class="bi bi-pencil"></i>
+                        </router-link>
+                    </span>
+                    <span class="badge done-icon">
+                        <i class="bi bi-check-lg" @click="_handleTaskCompleted(task.id)"></i>
+                    </span>
+                    <span class="badge delete-icon">
+                        <i class="bi bi-trash" @click="_handleDeleteTask(task.id)"> </i>
+                    </span>
+                </li>
+            </ol>
+
         </div>
-        
+
+
+        <div class="col-sm-12 col-lg-6 border">
+            <h3 class="h4 list-header">Done</h3>
+            <ol class="list-group list-group-flush">
+                <li v-for="completedTask in completedTaskList" :key="completedTask.id" class="list-group-item d-flex 
+                justify-content-between 
+                align-items-start
+                list-group-item-action">
+                    <div class="ms-2 me-auto">
+                        <span class="text">
+                            <del>
+                                {{ completedTask.title }}
+                            </del>
+                        </span>
+                    </div>
+                    <span class="badge unchecked-icon">
+                        <i class="bi bi-arrow-90deg-up" @click="_handleTaskUndone(completedTask.id)"></i>
+                    </span>
+                    <span class="badge delete-icon">
+                        <i class="bi bi-trash" @click="_handleDeleteTask(completedTask.id)"> </i>
+                    </span>
+                </li>
+            </ol>
+        </div>
     </div>
 
-    <AlertComp v-if="showAlert" :message="alertMessage" />
+    <AllDone :showRelax="showRelax"></AllDone>
 
-    <router-link :to="{ name: 'add-task' }" class="btn">Add Task</router-link>
-    
+    <router-view></router-view>
+    <AlertComp v-if="showAlert" :message="alertMessage" />
 </template>
 
 <script>
 import tasks from '../stores/tasks';
 import users from '../stores/users';
 import { mapActions, mapState } from 'pinia';
-import AlertComp from './AlertComp.vue';
+import AlertComp from './popups-alerts/AlertComp.vue';
+import AllDone from './popups-alerts/AllDone.vue';
+
 export default {
     name: 'TaskComp',
 
     components: {
         AlertComp,
+        AllDone
     },
 
     data() {
@@ -82,12 +81,23 @@ export default {
             newTask: '',
             showAlert: false,
             alertMessage: '',
+
         }
+
     },
 
     computed: {
         ...mapState(tasks, ['tasks', 'completedTaskList']),
         ...mapState(users, ['user']),
+
+        showRelax() {
+            if (this.tasks.length === 0) {
+                return true
+            } else {
+                return false
+            }
+        }
+
     },
 
     methods: {
@@ -122,7 +132,12 @@ export default {
                 this.showAlert = true
                 this.alertMessage = 'Something went wrong, please try again'
             }
+        },
+
+        hideShowRelax(){
+            this.showRelax = false;
         }
+
     },
 
 }
@@ -130,9 +145,10 @@ export default {
 </script>
 
 <style scoped>
-.container{
-    margin-bottom: 20px;
 
+.row {
+    height: 100%;
+    width: 100%;
 }
 
 .list-header {
@@ -140,9 +156,10 @@ export default {
 }
 
 .delete-icon:focus,
-.delete-icon:hover{
+.delete-icon:hover {
     color: red
 }
+
 .delete-icon,
 .edit-icon,
 .done-icon,
@@ -152,27 +169,32 @@ export default {
 
 .edit-icon:hover,
 .edit-icon:focus {
-    color: rgb(255, 221, 0); 
+    color: rgb(255, 221, 0);
 }
 
 
 .done-icon:hover,
 .done-icon:focus {
-    color: rgba(0, 255, 8, 0.772); 
+    color: rgba(0, 255, 8, 0.772);
 }
 
 .unchecked-icon:hover,
 .unchecked-icon:focus {
-    color: rgba(0, 162, 255, 0.772); 
+    color: rgba(0, 162, 255, 0.772);
 }
 
-@media (min-width: 992) {
-    .badge {
-        width: 30px;
+
+@media (min-width: 992px) {
+    .text {
+        font-size: 1.2rem
     }
 
+    .badge i {
+        font-size: 1.2rem;
+    }
+
+    .h4 {
+        text-align: center;
+    }
 }
-
-
-
 </style>

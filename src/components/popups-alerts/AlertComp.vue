@@ -2,19 +2,14 @@
     <div class="overlay">
         <div class="container container-with-overlay">
             <div class="alert" :class="alertClass" role="alert">
-                    <i v-if="message.includes('success')" class="bi bi-emoji-smile">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="color:#0f5132 "
-                        @click="_redirectHome">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </i>
-                    <i v-else class="bi bi-emoji-frown">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="color:#842029; "
-                        @click="_redirectHome">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </i>
-
+                <i v-if="message.includes('success')" class="bi bi-emoji-smile">
+                    <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close" style="color:#0f5132 "
+                        @click="_redirectHome"></button>
+                </i>
+                <i v-else class="bi bi-emoji-frown">
+                    <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close" style="color:#842029; "
+                        @click="_redirectHome"></button>
+                </i>
                 <h4>{{ title }}</h4>
                 <p>
                     {{ message }}
@@ -55,13 +50,11 @@ export default {
 
     methods: {
         _redirectHome() {
-            this.$router.push('/')
+            this.$router.push({ name: 'home' })
         },
-
-
     }
-
 }
+
 </script>
 
 <style scoped>
@@ -69,21 +62,18 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    top: 40%
 }
 
 .alert {
     border-radius: 20px;
 }
 
-.close {
+.btn-close {
     float: right;
-    width: 1.5rem;
+    width: 5px;
+    height: 5px;
 }
 
-.close span {
-    font-size: 1.5rem;
-}
 
 .alert i {
     font-size: 2rem;

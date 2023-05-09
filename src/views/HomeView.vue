@@ -1,14 +1,16 @@
 <template>
-  <div class="container wrapper rounded">
+  <div class="wrapper rounded">
     <h1 class="h2 title">
       Hello there!
     </h1>
     <p class="text-secondary">
-      <small>Let's plan what we have to get done!</small>
+      <small class="text">Let's plan what we have to get done!</small>
     </p>
-    <TaskComp />
+    <div class="container">
+      <TaskComp />
+      <router-link :to="{ name: 'add-task' }" class="btn">Add Task</router-link>
+    </div>
   </div>
-
 </template>
 
 <script>
@@ -39,14 +41,4 @@ export default {
 }
 </script>
 
-<style scoped>
-.container {
-  padding-top: 15px;
-  padding-bottom: 15px;
-}
 
-title-text {
-  font-size: 16px;
-  font-weight: 200;
-}
-</style>

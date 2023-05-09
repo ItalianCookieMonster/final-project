@@ -10,7 +10,6 @@ export default defineStore('users', {
     async fetchUser() {
       const {data: { user }} = await supabase.auth.getUser()
       this.user = user
-      console.log("I'm this.user in fetchUser", this.user)
       // if (!user) throw new Error('User not exists')
     },
 
@@ -40,7 +39,6 @@ export default defineStore('users', {
     },
 
     async recoverPassword(email) {
-      console.log("I am inside of resetPassword in store")
       const { error } = await supabase.auth.resetPasswordForEmail(email)
 
       if (error) throw error
@@ -48,13 +46,28 @@ export default defineStore('users', {
     },
 
     async updatePassword(newPassword) {
-      console.log("I am inside of updatePassword in store")
       const { data, error } = await supabase.auth.updateUser({
         password: newPassword,
       })
 
       if (error) throw error
       console.log(data)
-    }
+    },
+
+    async signInWithGoogle() {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+      })
+
+      if (error) throw error
+    },
+
+    // async signInWithGitHub() {
+    //   const { error } = await supabase.auth.signInWithOAuth({
+    //     provider: 'github',
+    //   })
+
+    //   if (error) throw error
+    // }
   }
 })
