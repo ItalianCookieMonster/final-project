@@ -18,7 +18,7 @@
                         <router-link :to="{ name: 'home' }" class="nav-link">Home</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link :to="{ name: 'home' }" class="nav-link">About</router-link>
+                        <router-link :to="{ name: 'profile' }" class="nav-link">Profile</router-link>
                     </li>
                     <li class="nav-item">
                         <button @click="_handleSignOut" class="nav-link">Sign Out </button>

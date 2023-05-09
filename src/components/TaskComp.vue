@@ -1,59 +1,59 @@
 <template>
-    <div class="row justify-content-center">
-        <div class="col-sm-12 col-lg-6 border-bottom-0">
-            <h3 class="h4 list-header">To do</h3>
-            <ol class="list-group list-group-flush">
+    <div class="task-container">
+        <div class="row">
+                <h3 class="h4 list-header">To do</h3>
+                <ol class="list-group list-group-flush">
 
-                <li v-for="task in tasks" :key="task.id" class="list-group-item d-flex 
+                    <li v-for="task in tasks" :key="task.id" class="list-group-item d-flex 
                 justify-content-between 
                 align-items-start
                 list-group-item-action">
-                    <div class="ms-2 me-auto">
-                        <span class="task-text">
-                            {{ task.title }}
+                        <div class="ms-2 me-auto">
+                            <span class="task-text">
+                                {{ task.title }}
+                            </span>
+                        </div>
+                        <span class="badge">
+                            <router-link :to="{ name: 'edit-task', params: { id: task.id } }" class="edit-icon">
+                                <i class="bi bi-pencil"></i>
+                            </router-link>
                         </span>
-                    </div>
-                    <span class="badge">
-                        <router-link :to="{ name: 'edit-task', params: { id: task.id } }" class="edit-icon">
-                            <i class="bi bi-pencil"></i>
-                        </router-link>
-                    </span>
-                    <span class="badge done-icon">
-                        <i class="bi bi-check-lg" @click="_handleTaskCompleted(task.id)"></i>
-                    </span>
-                    <span class="badge delete-icon">
-                        <i class="bi bi-trash" @click="_handleDeleteTask(task.id)"> </i>
-                    </span>
-                </li>
-            </ol>
+                        <span class="badge done-icon">
+                            <i class="bi bi-check-lg" @click="_handleTaskCompleted(task.id)"></i>
+                        </span>
+                        <span class="badge delete-icon">
+                            <i class="bi bi-trash" @click="_handleDeleteTask(task.id)"> </i>
+                        </span>
+                    </li>
+                </ol>
 
-        </div>
+            </div>
 
-
-        <div class="col-sm-12 col-lg-6 border">
-            <h3 class="h4 list-header">Done</h3>
-            <ol class="list-group list-group-flush">
-                <li v-for="completedTask in completedTaskList" :key="completedTask.id" class="list-group-item d-flex 
+            <div class="row">
+                    <h3 class="h4 list-header">Done</h3>
+                    <ol class="list-group list-group-flush">
+                        <li v-for="completedTask in completedTaskList" :key="completedTask.id" class="list-group-item d-flex 
                 justify-content-between 
                 align-items-start
                 list-group-item-action">
-                    <div class="ms-2 me-auto">
-                        <span class="task-text">
-                            <del>
-                                {{ completedTask.title }}
-                            </del>
-                        </span>
-                    </div>
-                    <span class="badge unchecked-icon">
-                        <i class="bi bi-arrow-90deg-up" @click="_handleTaskUndone(completedTask.id)"></i>
-                    </span>
-                    <span class="badge delete-icon">
-                        <i class="bi bi-trash" @click="_handleDeleteTask(completedTask.id)"> </i>
-                    </span>
-                </li>
-            </ol>
+                            <div class="ms-2 me-auto">
+                                <span class="task-text">
+                                    <del>
+                                        {{ completedTask.title }}
+                                    </del>
+                                </span>
+                            </div>
+                            <span class="badge unchecked-icon">
+                                <i class="bi bi-arrow-90deg-up" @click="_handleTaskUndone(completedTask.id)"></i>
+                            </span>
+                            <span class="badge delete-icon">
+                                <i class="bi bi-trash" @click="_handleDeleteTask(completedTask.id)"> </i>
+                            </span>
+                        </li>
+                    </ol>
+            </div>
         </div>
-    </div>
+
 
     <AllDone :showRelax="showRelax"></AllDone>
 
@@ -134,7 +134,7 @@ export default {
             }
         },
 
-        hideShowRelax(){
+        hideShowRelax() {
             this.showRelax = false;
         }
 
@@ -145,9 +145,17 @@ export default {
 </script>
 
 <style scoped>
+.task-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+    }
 .row {
     height: 100%;
     width: 100%;
+    margin: 20px;
 }
 
 .list-header {
@@ -184,6 +192,11 @@ export default {
 
 
 @media (min-width: 992px) {
+
+    .task-container {
+        flex-direction: row;
+
+    }
     .task-text {
         font-size: 1.2rem
     }
