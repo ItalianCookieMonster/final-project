@@ -4,6 +4,7 @@ import AuthView from '../views/auth-views/AuthView.vue'
 import SignIn from '../views/auth-views/SignIn.vue'
 import SignUp from '../views/auth-views/SignUp.vue'
 import users from '../stores/users'
+import profiles from '../stores/profiles'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,6 +24,22 @@ const router = createRouter({
           path: 'add-task',
           name: 'add-task',
           component: () => import('../views/tasks-views/AddTask.vue')
+        },
+        {
+          path: 'profile',
+          name: 'profile',
+          component: () => import('../views/profile-views/ProfileView.vue')
+        },
+        {
+          path: 'profile-form',
+          name: 'profile-form',
+          component: () => import ("../views/profile-views/ProfileForm.vue")
+        },
+        {
+          path: 'edit-profile',
+          name: 'edit-profile',
+          component: () => import ('../views/profile-views/EditProfileForm.vue'),
+          props: true
         }
       ]
     },
@@ -62,9 +79,10 @@ router.beforeEach(async (to) => {
   console.log(name)
   const store = users()
   await store.fetchUser()
+  const store2 = profiles()
+  await store2._getProfile()
 
   const { user } = store
-  console.log("I'm the user fetch in the router = ", user)
 
   if (
     !user &&

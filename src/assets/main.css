@@ -44,6 +44,18 @@ ul {
   color: whitesmoke
 }
 
+/* Errors styles */
+
+.error {
+  font-size: smaller;
+  background-color: white;
+  padding: 5px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+
 /*Buttons styles */
 
 .btn {
@@ -112,8 +124,6 @@ ul {
 /* Grid styles */
 
 .row {
-  /* height: 100%;
-  width: 100%; */
   --bs-gutter-x: 0;
   --bs-gutter-y: 0;
   border-radius: 10px;

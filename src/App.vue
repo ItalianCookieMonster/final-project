@@ -18,6 +18,9 @@ export default {
     RouterView,
     NavBar,
   },
+
+
+
 }
 
 </script>

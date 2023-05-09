@@ -10,14 +10,14 @@
                 <div class="input-box">
                     <header>Welcome to the chilled task manager</header>
                     <form>
-                        <div class="input-field">
-                            <input type="text" id="name" v-model="userData.name" class="input" required>
+                        <!-- <div class="input-field">
+                            <input type="text" id="name" v-model="userData.first_name" class="input" required>
                             <label for="name">Name</label>
                         </div>
                         <div class="input-field">
-                            <input type="text" id="surname" v-model="userData.surname" class="input" required>
+                            <input type="text" id="surname" v-model="userData.last_name" class="input" required>
                             <label for="surname" class="form-lable">Surname</label>
-                        </div>
+                        </div> -->
 
                         <div class="input-field" :class="invalidInput.email">
                             <input type="email" id="email" v-model="userData.email" class="input" required>
@@ -78,8 +78,6 @@ export default {
             userData: {
                 email: '',
                 password: '',
-                name: '',
-                surname: '',
                 confirmPassword: ''
             },
 
@@ -150,17 +148,8 @@ export default {
     margin-top: 50px;
 }
 
-.error {
-    font-size: smaller;
-    background-color: white;
-    padding: 5px;
-    margin-top: 0;
-    margin-bottom: 20px;
-    border-radius: 5px;
-}
-
 .bi {
-    float: right;
+  float: right;
 }
 
 .invalid-input input {

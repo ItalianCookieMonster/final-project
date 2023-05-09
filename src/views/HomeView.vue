@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper rounded">
     <h1 class="h2 title">
-      Hello there!
+      Hello {{ profile.first_name }}!
     </h1>
     <p class="text-secondary">
       <small class="text">Let's plan what we have to get done!</small>
@@ -11,13 +11,17 @@
       <router-link :to="{ name: 'add-task' }" class="btn">Add Task</router-link>
     </div>
   </div>
+
+  <router-view></router-view>
 </template>
 
 <script>
 import tasks from '../stores/tasks';
 import users from '../stores/users';
+import profiles from '../stores/profiles';
 import { mapActions, mapState } from 'pinia';
 import TaskComp from '../components/TaskComp.vue';
+
 export default {
   name: 'HomeView',
 
@@ -26,7 +30,8 @@ export default {
   },
 
   computed: {
-    ...mapState(users, ['user'])
+    ...mapState(users, ['user']),
+    ...mapState(profiles, ['profile'])
   },
 
   methods: {
@@ -40,5 +45,12 @@ export default {
 
 }
 </script>
+
+<style scoper>
+
+
+
+
+</style>
 
 
