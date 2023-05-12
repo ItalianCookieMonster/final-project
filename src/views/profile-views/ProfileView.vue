@@ -1,5 +1,5 @@
 <template>
-    <div class="overlay" >
+    <div class="overlay">
         <div class=" container-profile">
             <AuthAlertComp v-if="showAlert" :message="alertMessage" />
             <div class="container-header">
@@ -73,7 +73,7 @@ export default {
                 console.log('here')
                 await this._deleteProfile(this.profile.id)
                 this.showAlert = true
-                this.alertMessage = 'Account deleted successfully'
+                this.alertMessage = "The account was deleted, we're sorry to see you going."
             } catch (error) {
                 this.showAlert = true;
                 this.alertMessage = 'Something went wrong, please try again'
@@ -105,15 +105,16 @@ export default {
 </script>
 
 <style scoped>
-
 .container-profile {
     color: whitesmoke;
     width: 90%;
     background-image: url(../../assets/images/bgprofile.jpg);
     background-size: cover;
     background-position: center;
-    min-height: 100vh;
+    min-height: 90vh;
 }
+
+
 
 .img-fluid {
     width: 80px;

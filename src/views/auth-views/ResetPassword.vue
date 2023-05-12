@@ -17,7 +17,7 @@
             </div>
             <button @click.prevent="handleUpdatePasword" class="btn">Submit</button>
         </form>
-        <PasswordAlertComp v-if="showAlert" :message="alertMessage"/>
+        <PasswordAlertComp v-if="showAlert" :message="alertMessage" />
     </div>
 </template>
 
@@ -30,8 +30,8 @@ export default {
     name: 'ResetPassword',
 
     components: {
-            PasswordAlertComp
-        },
+        PasswordAlertComp
+    },
 
     data() {
         return {
@@ -49,7 +49,6 @@ export default {
         async handleUpdatePasword() {
             await this._checkConfirmPassword()
             try {
-                console.log("I am inside the try", this.newPassword)
                 await this.updatePassword(this.newPassword);
                 this.showAlert = true;
                 this.alertMessage = 'Success! You have a brand new password';
@@ -62,7 +61,7 @@ export default {
                 } else {
                     this.alertMessage = 'Something went wrong please try again';
                 }
-        
+
             }
 
         },

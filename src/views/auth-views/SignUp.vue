@@ -10,15 +10,6 @@
                 <div class="input-box">
                     <header>Welcome to the chilled task manager</header>
                     <form>
-                        <!-- <div class="input-field">
-                            <input type="text" id="name" v-model="userData.first_name" class="input" required>
-                            <label for="name">Name</label>
-                        </div>
-                        <div class="input-field">
-                            <input type="text" id="surname" v-model="userData.last_name" class="input" required>
-                            <label for="surname" class="form-lable">Surname</label>
-                        </div> -->
-
                         <div class="input-field" :class="invalidInput.email">
                             <input type="email" id="email" v-model="userData.email" class="input" required>
                             <label for="email" class="form-lable">Email</label>
@@ -113,17 +104,20 @@ export default {
 
             } catch (err) {
                 console.log(err)
-                if (err.message.includes('Password')) {
+                if (err.message.includes('Password' || 'password')) {
                     this.error.password = true;
                     this.invalidInput.password = 'invalid-input';
+                    setTimeout(() => this.error.password = false, 3000)
                 }
                 else if (err.message.includes('To signup, please provide your email') || err.message.includes('invalid format')) {
                     this.error.email = true;
                     this.invalidInput.email = 'invalid-input';
+                    setTimeout(() => this.error.email = false, 3000)
                 }
                 else {
                     this.showEmailVerification = true
                     this.alertMessage = 'Something went wrong, please try again later'
+                    setTimeout(() => this.error.email = false, 3000)
                 }
             }
         },
@@ -149,7 +143,7 @@ export default {
 }
 
 .bi {
-  float: right;
+    float: right;
 }
 
 .invalid-input input {

@@ -57,12 +57,12 @@ export default {
 </script>
 
 <style scoped>
-
 .btn-container {
     display: flex;
     width: 100%;
     justify-content: space-around;
 }
+
 .relax-image {
     width: 80%;
 }
@@ -92,6 +92,10 @@ export default {
     .container {
         width: 50%;
 
+    }
+
+    .relax-image {
+        width: 70%;
     }
 }
 </style>

@@ -31,14 +31,9 @@ const router = createRouter({
           component: () => import('../views/profile-views/ProfileView.vue')
         },
         {
-          path: 'profile-form',
-          name: 'profile-form',
-          component: () => import ("../views/profile-views/ProfileForm.vue")
-        },
-        {
           path: 'edit-profile',
           name: 'edit-profile',
-          component: () => import ('../views/profile-views/EditProfileForm.vue'),
+          component: () => import('../views/profile-views/EditProfileForm.vue'),
           props: true
         }
       ]
@@ -70,6 +65,12 @@ const router = createRouter({
           component: () => import('../../src/views/auth-views/ResetPassword.vue')
         }
       ]
+    },
+
+    {
+      path: '/:catchAll(.*)',
+      name: 'NotFound',
+      component: () => import('../../src/views/NotFound.vue')
     }
   ]
 })

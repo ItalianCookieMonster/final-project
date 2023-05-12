@@ -11,33 +11,28 @@ export default defineStore('profiles', {
     actions: {
         async _getProfile() {
             const { data } = await supabase.from('profiles').select()
-
-            console.log('1', data)
             this.profile = { ...data[0] }
-            console.log('2', this.profile)
         },
 
-        async _setProfile(first_name, last_name, email, id) {
+        async _setProfile(first_name, last_name, email, age, id) {
             const { data, error } = await supabase
                 .from('profiles')
-                .update({ first_name, last_name, email })
+                .update({ first_name, last_name, email, age })
                 .eq('id', id)
                 .select()
 
             if (error) {
                 throw error
             }
-            this.profile = data
+            this.profile = {...data[0]}
         },
 
         async _deleteProfile(user_id) {
-            const { data, error } = await supabase.from('profiles').delete().eq('id', user_id ).select()
+            const { error } = await supabase.from('profiles').delete().eq('id', user_id ).select()
 
             if (error) {
                 throw error
             }
-
-            console.log("Inside delete profile", data)
         }
     }
 })

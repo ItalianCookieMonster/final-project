@@ -1,8 +1,8 @@
 <template>
     <div class="overlay">
         <div class="container rounded">
-            <AuthAlertComp v-if="showAlert" :message="alertMessage"/>
-            <img class="img-fluid rounded" src="../../assets/images/Welcome.jpg" alt="alien and astronaut meeting" />
+            <AuthAlertComp v-if="showAlert" :message="alertMessage" />
+            <img class="img-fluid rounded" src="../assets/images/Welcome.jpg" alt="alien and astronaut meeting" />
             <div class="form-container">
                 <h2 class="title">Tell us a bit more about you</h2>
                 <form>
@@ -35,9 +35,9 @@
 
 
 <script>
-import AuthAlertComp from '../../components/popups-alerts/AuthAlertComp.vue';
-import profiles from '../../stores/profiles';
-import users from '../../stores/users';
+import AuthAlertComp from '../components/popups-alerts/AuthAlertComp.vue';
+import profiles from '../stores/profiles';
+import users from '../stores/users';
 import { mapActions, mapState } from 'pinia';
 
 
@@ -53,7 +53,7 @@ export default {
             userData: {
                 first_name: '',
                 last_name: '',
-                age: '',
+                age: 0,
             },
 
             errors: {
@@ -74,31 +74,40 @@ export default {
         ...mapActions(profiles, ['_setProfile']),
 
         async _handleSetProfile() {
+            console.log("I am here")
             await this._checkIfName()
             await this._checkIfSurname()
             try {
-                await this._setProfile(this.userData.first_name, this.userData.last_name, this.user.email, this.user.id);
-                this.$router.push({name: 'home'})
+                await this._setProfile(this.userData.first_name, this.userData.last_name, this.user.email, this.userData.age, this.user.id);
+                this.dismiss()
             } catch (error) {
-                console.error
+                console.log(error)
                 this.showAlert = true
                 this.alertMessage = 'Something went wrong, please try again'
 
             }
         },
 
-        async _checkIfName(){
-            if (this.userData.first_name === ''){
+        async _checkIfName() {
+            if (this.userData.first_name === '') {
                 this.errors.name = true;
+                setTimeout(() => this.errors.name = false, 3000)
                 throw new Error('Missing first name');
             }
+
         },
 
-        async _checkIfSurname(){
-            if(this.userData.surname === ''){
+        async _checkIfSurname() {
+            if (this.userData.surname === '') {
                 this.errors.name = true
+                setTimeout(() => this.errors.name = false, 3000)
                 throw new Error('Missing last name')
             }
+
+        },
+
+        dismiss() {
+            this.$emit('dismiss')
         }
 
     },
@@ -146,14 +155,14 @@ export default {
 }
 
 .bi {
-  float: right;
+    float: right;
 }
 
 
 
 @media (min-width: 768px) {
 
-    .container{
+    .container {
         top: 5%;
         flex-direction: row;
         justify-content: space-evenly;
@@ -168,7 +177,7 @@ export default {
 
 
 @media (min-width: 992px) {
-    .container{
+    .container {
         width: 70%;
         top: 10%;
         justify-content: space-between;
@@ -179,5 +188,4 @@ export default {
         width: 50%;
     }
 }
-
 </style>

@@ -2,7 +2,7 @@
     <div class="overlay" v-if="alertDisplay">
         <div class="container container-with-overlay">
             <div class="alert" :class="alertClass" role="alert">
-                <i v-if="message.includes('success')" class="bi bi-emoji-smile">
+                <i v-if="message.includes('success') || message.includes('deleted')" class="bi bi-emoji-smile">
                     <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close" style="color:#0f5132 "
                         @click="_redirectUser">
                     </button>
@@ -43,12 +43,14 @@ export default {
         title() {
             if (this.message.includes('success')) {
                 return 'Welcome to the crew!';
+            } else if (this.message.includes("deleted")){
+                return 'Goodbye'
             } else {
                 return 'Ooops!';
             }
         },
         alertClass() {
-            if (this.message.includes('success')) {
+            if (this.message.includes('success') || this.message.includes('deleted')) {
                 return 'alert-success'
             } else {
                 return 'alert-danger'

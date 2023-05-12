@@ -3,7 +3,7 @@ import supabase from '../supabase/index'
 
 export default defineStore('users', {
   state: () => ({
-    user: undefined,
+    user: undefined
   }),
 
   actions: {
@@ -23,10 +23,10 @@ export default defineStore('users', {
       if (data) this.user = data
     },
 
-    async signUp({ email, password}) {
+    async signUp({ email, password }) {
       const { data, error } = await supabase.auth.signUp({
         email,
-        password,
+        password
       })
       if (error) throw error
       if (data) this.user = data
@@ -44,12 +44,11 @@ export default defineStore('users', {
     },
 
     async updatePassword(newPassword) {
-      const { data, error } = await supabase.auth.updateUser({
+      const { error } = await supabase.auth.updateUser({
         password: newPassword
       })
 
       if (error) throw error
-      console.log(data)
     },
 
     async signInWithGoogle() {
