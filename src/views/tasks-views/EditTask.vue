@@ -10,15 +10,23 @@
                         </div>
                         <div class="form-group">
                             <label class="lable" for="editedDescription">Description</label>
-                            <textarea v-model="editedDescription" name="editedDescription" class="form-control" rows="4"></textarea>
+                            <textarea v-model="editedDescription" name="editedDescription" class="form-control"
+                                rows="4"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="priority" class="lable">Priority</label>
+                            <select class="form-select" name="priority" aria-label="Default select example"
+                                v-model="editedPriority">
+                                <option value="high">High</option>
+                                <option value="medium">Medium</option>
+                                <option value="low">Low</option>
+                            </select>
                         </div>
                         <div class="btns-form">
                             <button @click.prevent="_handleEditing()" class="btn">Save</button>
                             <router-link :to="{ name: 'home' }" class="btn">Cancel</router-link>
                         </div>
-
-                    
-
                     </form>
 
                     <AlertComp v-if="showAlert" :message="alertMessage" />
@@ -46,6 +54,7 @@ export default {
             editedDescription: '',
             showAlert: false,
             alertMessage: '',
+            editedPriority: ''
         }
     },
 
@@ -60,6 +69,8 @@ export default {
 
         _setDefaultTitle() {
             this.editedTask = this.singleTask.title;
+            this.editedDescription = this.singleTask.description;
+            this.editedPriority = this.singleTask.priority;
         },
 
 
@@ -75,7 +86,7 @@ export default {
 
         async _handleEditing() {
             try {
-                await this._editTask({ title: this.editedTask, id: this.id });
+                await this._editTask({ title: this.editedTask, id: this.id, description: this.editedDescription, priority: this.editedPriority });
                 this.showAlert = true;
                 this.alertMessage = 'Task updated successfully';
             } catch (error) {
@@ -95,7 +106,6 @@ export default {
 </script>
 
 <style scoped>
-
 .row {
     padding: 10px;
     height: auto;
@@ -108,5 +118,4 @@ export default {
 .lable {
     padding: 10px;
 }
-
 </style>

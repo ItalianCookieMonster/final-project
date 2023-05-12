@@ -52,7 +52,7 @@ export default {
             userData: {
                 first_name: '',
                 last_name: '',
-                age: '',
+                age: 0,
             },
 
             errors: {
@@ -75,7 +75,7 @@ export default {
 
         async _handleSetProfile() {
             try {
-                await this._setProfile(this.userData.first_name, this.userData.last_name, this.user.email, this.user.id);
+                await this._setProfile(this.userData.first_name, this.userData.last_name, this.user.email, this.userData.age, this.user.id);
                 this.$router.push({ name: 'home' })
             } catch (error) {
                 console.error

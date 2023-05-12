@@ -1,5 +1,6 @@
 <template>
-  <div class="wrapper rounded">
+  <NavBar />
+  <div class="wrapper rounded main">
     <h1 class="h2 title">
       Hello {{ profile.first_name }}!
     </h1>
@@ -11,11 +12,14 @@
       <router-link :to="{ name: 'add-task' }" class="btn">Add Task</router-link>
     </div>
   </div>
+  <ProfileForm v-if="showProfileform" @dismiss="dismissForm" />
 
   <router-view></router-view>
 </template>
 
 <script>
+import NavBar from '../components/NavBar.vue';
+import ProfileForm from '../components/ProfileForm.vue';
 import tasks from '../stores/tasks';
 import users from '../stores/users';
 import profiles from '../stores/profiles';
@@ -26,7 +30,16 @@ export default {
   name: 'HomeView',
 
   components: {
-    TaskComp
+    TaskComp,
+    ProfileForm,
+    NavBar
+  },
+
+  data() {
+    return {
+      name: '',
+      showProfileform: false
+    }
   },
 
   computed: {
@@ -36,21 +49,41 @@ export default {
 
   methods: {
     ...mapActions(tasks, ['_fetchAllTasks']),
+    ...mapActions(profiles, ['_getProfile']),
 
+    _setName() {
+      if (this.profile.first_name === null) {
+        this.showProfileform = true;
+      }
+    },
+
+    dismissForm() {
+      this.showProfileform = false;
+    }
+
+  },
+
+  mounted() {
+    this._setName()
   },
 
   created() {
     this._fetchAllTasks()
+    this._getProfile()
   },
 
 }
 </script>
 
 <style scoper>
+.transition-container {
+  transition: 0.5s
+}
 
-
-
-
+.main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
 </style>
 
 

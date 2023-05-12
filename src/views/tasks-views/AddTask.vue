@@ -15,6 +15,15 @@
                                 class="form-control"></textarea>
                         </div>
 
+                        <div class="form-group">
+                            <label for="priority" class="lable">Priority</label>
+                            <select class="form-select" name="priority" aria-label="Default select example" v-model="priority">
+                                <option value="high">High</option>
+                                <option value="medium">Medium</option>
+                                <option value="low">Low</option>
+                            </select>
+                        </div>
+
                         <div class="btns-form">
                             <button @click.prevent="_handleAddNewTask" class="btn">Save</button>
                             <router-link :to="{ name: 'home' }" class="btn">Cancel</router-link>
@@ -47,7 +56,8 @@ export default {
             newTask: '',
             description: '',
             showAlert: false,
-            alertMessage: ''
+            alertMessage: '',
+            priority: ''
         }
     },
 
@@ -62,7 +72,7 @@ export default {
         async _handleAddNewTask() {
             await this._checkIfTitle()
             try {
-                await this._addNewTask({ title: this.newTask, user_id: this.user.id });
+                await this._addNewTask({ title: this.newTask, user_id: this.user.id, description: this.description, priority: this.priority });
                 this.showAlert = true;
                 this.alertMessage = 'Task added successfully';
             } catch (error) {
@@ -103,6 +113,4 @@ export default {
 .lable {
     padding: 10px;
 }
-
-
 </style>
